@@ -17,21 +17,15 @@ public record Weather (Main main, String visibility,Sys sys ){}
 @JsonIgnoreProperties(ignoreUnknown = true)
 record Main(String temp, String temp_min, String temp_max, String pressure, String humidity, String sea_level){}
 
-
-
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 record Sys(String sunrise, String sunset){
 
     public String toFormatted(String timeStamp) {
-        Timestamp ts = new Timestamp(Long.parseLong(timeStamp)*1000);
 
+        Timestamp ts = new Timestamp(Long.parseLong(timeStamp)*1000);
         Date date = new Date();
         date.setTime(ts.getTime());
-
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss a z");
-
-
         return formatter.format(date);
 
     }

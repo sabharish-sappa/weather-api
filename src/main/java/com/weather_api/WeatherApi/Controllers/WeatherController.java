@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weather_api.WeatherApi.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -50,7 +52,6 @@ public class WeatherController {
             String locationBasedUrl = "https://api.openweathermap.org/data/2.5/weather?lat="+locationCordinates.lat()+"&lon="+locationCordinates.lng()+"&units=metric&appid="+weatherApiKey;
 
 
-
             Weather weather = restTemplate.getForObject(locationBasedUrl, Weather.class);
             System.out.println(weather);
             weatherResponse.setWeather(weather);
@@ -85,9 +86,7 @@ public class WeatherController {
 
 
         String[] cities = citiesString.split(",");
-
-        List<WeatherResponse>weatherResponses = new ArrayList<>();
-
+        List<WeatherResponse> weatherResponses = new ArrayList<>();
         for(String city :cities){
             weatherResponses.add(getCityWeather(city));
         }
@@ -95,96 +94,80 @@ public class WeatherController {
         return weatherResponses;
     }
 
-//    @GetMapping("/forecast/{city}")
-//    public List<ForecastWeatherData> getForecastByCity(@PathVariable("city") String city, @RequestParam("days") int days){
-//
-//        try {
-//
-////            if days <=0
-//
-//
-//
-//            Location locationCordinates = getLocation(city);
-//
-//            if (locationCordinates == null)
-//                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "City not found...");
-//
-//            System.out.println("from the function");
-//
-//            String url = "https://api.openweathermap.org/data/2.5/forecast?lat="+locationCordinates.lat()+"&lon="+locationCordinates.lng()+"&appid="+weatherApiKey;
-//
-//            List<ForecastWeather> forecastDataFromApi = restTemplate.getForObject(url, List.class);
-//            List<ForecastWeatherData> forecastDataOutput = new ArrayList<>();
-//
-//
-//            for(int i =0;i<days*8;i++)
-//            {
-//                forecastDataOutput.add(forecastDataFromApi.get(i));
-//            }
-//
-//            System.out.println(forecastDataOutput.size());
-//
-//            return forecastDataOutput;
-//
-//
-//
-//
-//
-//
-////            forecastData.forecastData().forEach(System.out::println);
-//
-//
-//
-//        }
-//        catch (HttpClientErrorException clientErrorException){
-//
-//            System.out.println(clientErrorException.getMessage());
-//
-//            return null;
-////            weatherResponse.setCity(city);
-////
-////            return new WeatherResponse(city,"City Not Found...",null);
-//        }
-//
-//
-//        catch (Exception e){
-//            System.out.println(e.getMessage());
-//            return null;
-////            System.out.println(e);
-////
-////            weatherResponse.setCity(city);
-////            weatherResponse.setResultMessage(e.getMessage());
-////
-////            return new WeatherResponse(city, e.getMessage(),null);
-//        }
-//
-//
-//
-////        return null;
-//
-//    }
+    @GetMapping("/forecast/{city}")
+    public ForecastResponse getForecastByCity(@PathVariable("city") String city, @RequestParam("days") int days){
+
+        try {
+            Location locationCordinates = getLocation(city);
+            if (locationCordinates == null)
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "City not found...");
+
+            System.out.println("from the function");
+            String url = "https://api.openweathermap.org/data/2.5/forecast?lat="+locationCordinates.lat()+"&lon="+locationCordinates.lng()+"&appid="+weatherApiKey;
+
+
+            ForecastResponse forecastResponse =  restTemplate.getForObject(url, ForecastResponse.class);
+
+            if(forecastResponse == null || forecastResponse.getList()==null)
+                throw new HttpClientErrorException(HttpStatus.NO_CONTENT,"No forecast data found...");
+
+
+            int maxEntries = days*8;
+            if(forecastResponse.getList().size()>maxEntries)
+            {
+                forecastResponse.setList(forecastResponse.getList().subList(0,maxEntries));
+            }
+
+            System.out.println(forecastResponse.getList().size());
+
+
+            return forecastResponse;
+
+
+
+
+        }
+        catch (HttpClientErrorException clientErrorException){
+
+            System.out.println(clientErrorException.getMessage());
+
+            return null;
+
+        }
+
+
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+
+
+
+    }
 
 
     public Location getLocation(String city){
         String url = "https://geocode.maps.co/search?q="+city+"&api_key="+geocodingApikey;
 
-        List<Map<String, Location>> response = restTemplate.getForObject(url,List.class);
+//        List<Location> locationList = restTemplate.getForObject(url, List.class);
 
+        ResponseEntity<List<Location>> responseEntity = restTemplate.exchange(
+                url,
+                org.springframework.http.HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Location>>() {}
 
-//        list of strings
-//        take the 0th string
-//        convert that strng to location
+        );
 
-//list of locations
+        List<Location> locationList = responseEntity.getBody();
 
-        if(response.size()==0)
-            return null;
+        // Check and return the 0th object safely
+        if (locationList != null && !locationList.isEmpty()) {
+            return locationList.get(0); // Return the 0th address
+        }
 
-        Location location = om.convertValue(response.get(0), Location.class);
-
-        System.out.println(location);
-        return location;
-
+        throw new IllegalArgumentException("No locations found for the given city name.");
     }
 
 

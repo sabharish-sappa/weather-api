@@ -3,30 +3,30 @@ package com.weather_api.WeatherApi.models;
 public class WeatherResponse {
 
 
-    String resultMessage;
+    String result_message;
     String city;
     Weather weather;
 
-    public WeatherResponse(String city, String resultMessage, Weather weather) {
+    public WeatherResponse(String city, String result_message, Weather weather) {
 
-        this.resultMessage = resultMessage;
+        this.result_message = result_message;
         this.weather = weather;
         this.city = city;
     }
 
     public WeatherResponse(String resultMessage) {
-        this.resultMessage = resultMessage;
+        this.result_message = resultMessage;
     }
 
     public WeatherResponse(){}
 
 
     public String getResultMessage() {
-        return resultMessage;
+        return result_message;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.resultMessage = resultMessage;
+        this.result_message = resultMessage;
     }
 
     public Weather getWeather() {
