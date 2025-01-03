@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -38,46 +39,41 @@ public class WeatherController {
     String geocodingApikey;
 
     @GetMapping("/today/{city}")
-    public WeatherResponse getCityWeather(@PathVariable("city") String city) throws URISyntaxException {
-        WeatherResponse weatherResponse = new WeatherResponse();
+    public WeatherResponse getCityWeather(@PathVariable("city") String city) {
+//        WeatherResponse weatherResponse = new WeatherResponse();
 
         try{
 
             Location locationCordinates = getLocation(city);
 
             if(locationCordinates==null)
-                throw  new HttpClientErrorException(HttpStatus.NOT_FOUND,"City not found...");
+                throw  new HttpClientErrorException(HttpStatus.NOT_FOUND,"No city found with the given name...");
 
             String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + weatherApiKey;
 
             String locationBasedUrl = "https://api.openweathermap.org/data/2.5/weather?lat="+locationCordinates.lat()+"&lon="+locationCordinates.lng()+"&units=metric&appid="+weatherApiKey;
 
             Weather weather = restTemplate.getForObject(locationBasedUrl, Weather.class);
-            weatherResponse.setResultMessage("Success");
-            weatherResponse.setCity(city);
-            weatherResponse.setWeather(new WeatherDTO(weather));
 
+            return new WeatherResponse(city,"Success",weather,Integer.toString(HttpStatus.OK.value()));
 
-
-            return weatherResponse;
         }
 
         catch (HttpClientErrorException clientErrorException){
-            weatherResponse.setCity(city);
-            return new WeatherResponse(clientErrorException.getMessage(),city);
+
+            return new WeatherResponse(clientErrorException.getMessage(),city,Integer.toString(HttpStatus.NOT_FOUND.value()));
         }
 
 
         catch (Exception e){
-            System.out.println(e);
-            return new WeatherResponse(e.getMessage(),city);
+            return new WeatherResponse(e.getMessage(),city,Integer.toString(HttpStatus.BAD_REQUEST.value()));
         }
     }
 
 
 
     @GetMapping("/today/cities/{cities}")
-    public List<WeatherResponse> getCitiesWeather(@PathVariable("cities") String citiesString) throws URISyntaxException {
+    public List<WeatherResponse> getCitiesWeather(@PathVariable("cities") String citiesString) {
 
 
         String[] cities = citiesString.split(",");
@@ -95,19 +91,19 @@ public class WeatherController {
     }
 
     @GetMapping("/forecast/{city}")
-    public ForecastWeatherResponse getForecastByCity(@PathVariable("city") String city, @RequestParam("days") int days){
+    public ForecastWeatherResponse getForecastByCity(@PathVariable("city") String city, @RequestParam(value = "days",defaultValue = "5") int days){
 
         try {
 
             if(days<0)
                 throw new InputMismatchException("Days value should be positive...");
 
-
             Location locationCordinates = getLocation(city);
-            if (locationCordinates == null)
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "City not found...");
-            String url = "https://api.openweathermap.org/data/2.5/forecast?lat="+locationCordinates.lat()+"&lon="+locationCordinates.lng()+"&appid="+weatherApiKey;
 
+            if (locationCordinates == null)
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+
+            String url = "https://api.openweathermap.org/data/2.5/forecast?lat="+locationCordinates.lat()+"&lon="+locationCordinates.lng()+"&appid="+weatherApiKey;
 
             ForecastWeatherList forecastWeatherList =  restTemplate.getForObject(url, ForecastWeatherList.class);
 
@@ -129,20 +125,20 @@ public class WeatherController {
                 forecastWeatherResponse.setResultMessage("Success");
 
             forecastWeatherResponse.setCity(city);
+            forecastWeatherResponse.setResultCode(Integer.toString(HttpStatus.OK.value()));
 
             return forecastWeatherResponse;
 
         }
         catch (HttpClientErrorException clientErrorException){
 
-            System.out.println(clientErrorException.getMessage());
-            return new ForecastWeatherResponse(clientErrorException.getMessage(),city,"0");
+            return new ForecastWeatherResponse("No City found with the given name.",city,Integer.toString(HttpStatus.NOT_FOUND.value()));
         }
 
 
         catch (Exception e){
             System.out.println(e.getMessage());
-            return new ForecastWeatherResponse(e.getMessage(),city,"0");
+            return new ForecastWeatherResponse(e.getMessage(),city,Integer.toString(HttpStatus.BAD_REQUEST.value()));
         }
 
     }
@@ -166,7 +162,8 @@ public class WeatherController {
             return locationList.get(0); // Return the 0th address
         }
 
-        throw new IllegalArgumentException("No locations found for the given city name.");
+        return null;
+
     }
 
 

@@ -10,20 +10,22 @@ import java.util.List;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"result_message","city","result_count","forecast_data"})
+@JsonPropertyOrder({"result_message","result_code","city","result_count","forecast_data"})
 public class ForecastWeatherResponse {
 
     String resultMessage;
+    String resultCode;
     String city;
     String size;
     List<ForecastWetherDTO> forecastWeatherData;
 
     public ForecastWeatherResponse(){}
 
-    public ForecastWeatherResponse(String resultMessage, String city,String size){
+
+    public ForecastWeatherResponse(String resultMessage, String city,String resultCode){
         this.resultMessage = resultMessage;
         this.city = city;
-        this.size= size;
+        this.resultCode = resultCode;
     }
 
     public ForecastWeatherResponse(String resultMessage, String city, String size, List<ForecastWetherDTO> forecastWeatherData) {
@@ -78,6 +80,15 @@ public class ForecastWeatherResponse {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    @JsonProperty("result_code")
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
     }
 }
 
