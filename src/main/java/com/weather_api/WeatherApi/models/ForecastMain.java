@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record ForecastMain(
         @JsonAlias("humidity") int humidity,
-        @JsonAlias("temp_min") double min_temp,
-        @JsonAlias("temp_max") double max_temp,
+        @JsonAlias("temp_min") double minTemp,
+        @JsonAlias("temp_max") double maxTemp,
         @JsonAlias("pressure") int pressure,
-        @JsonAlias("sea_level") int sea_level
+        @JsonAlias("sea_level") int seaLevel
 ) {}

@@ -1,47 +1,67 @@
 package com.weather_api.WeatherApi.models;
 
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({"result_message","city","weather"})
 public class WeatherResponse {
 
 
-    String result_message;
+    String resultMessage;
     String city;
-    Weather weather;
+    WeatherDTO weatherDTO;
 
-    public WeatherResponse(String city, String result_message, Weather weather) {
+    public WeatherResponse(String city, String resultMessage, Weather weather) {
 
-        this.result_message = result_message;
-        this.weather = weather;
+        this.resultMessage = resultMessage;
+        this.weatherDTO = new WeatherDTO(weather);
         this.city = city;
     }
 
-    public WeatherResponse(String resultMessage) {
-        this.result_message = resultMessage;
+    public WeatherResponse(String resultMessage, String city){
+        this.resultMessage = resultMessage;
+        this.city = city;
+    }
+
+
+
+    public WeatherResponse( String city,String resultMessage, WeatherDTO weatherDTO) {
+        this.resultMessage = resultMessage;
+        this.city = city;
+        this.weatherDTO = weatherDTO;
+    }
+
+    public WeatherResponse(String result_message) {
+        this.resultMessage = result_message;
     }
 
     public WeatherResponse(){}
 
-
+    @JsonProperty("result_message")
     public String getResultMessage() {
-        return result_message;
+        return resultMessage;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.result_message = resultMessage;
+        this.resultMessage = resultMessage;
     }
 
-    public Weather getWeather() {
-        return weather;
+    public WeatherDTO getWeather() {
+        return weatherDTO;
     }
 
-    public void setWeather(Weather weather) {
-        this.weather = weather;
+    public void setWeather(WeatherDTO weatherDTO) {
+        this.weatherDTO = weatherDTO;
     }
 
     public String getCity() {
         return city;
     }
-
-
 
     public void setCity(String city) {
         this.city = city;
