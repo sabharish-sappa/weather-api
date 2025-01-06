@@ -1,5 +1,10 @@
 package com.weather_api.WeatherApi.models;
 
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WeatherDTO {
 
     private String humidity;

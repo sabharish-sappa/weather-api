@@ -1,17 +1,8 @@
-package com.weather_api.WeatherApi.Controllers;
+package com.weather_api.WeatherApi.controllers;
 
-import com.weather_api.WeatherApi.models.Location;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.nio.file.Watchable;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 class WeatherControllerTest {
 

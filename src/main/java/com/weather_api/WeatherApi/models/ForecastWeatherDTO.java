@@ -3,11 +3,9 @@ package com.weather_api.WeatherApi.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.awt.*;
 
-
-@JsonPropertyOrder({"date"})
-public class ForecastWetherDTO {
+@JsonPropertyOrder({})
+public class ForecastWeatherDTO {
 
     private String humidity;
 
@@ -21,16 +19,14 @@ public class ForecastWetherDTO {
     @JsonProperty("sea_level")
     private String seaLevel;
     private String visibility;
-    private String date;
 
-    public ForecastWetherDTO(ForecastWeather forecastWeather){
+    public ForecastWeatherDTO(ForecastWeather forecastWeather){
         this.humidity = Integer.toString(forecastWeather.main().humidity());
         this.minTemp = Double.toString(forecastWeather.main().minTemp());
         this.maxTemp = Double.toString(forecastWeather.main().maxTemp());
         this.pressure = Integer.toString(forecastWeather.main().pressure());
         this.seaLevel = Integer.toString(forecastWeather.main().seaLevel());
         this.visibility = Integer.toString(forecastWeather.visibility());
-        this.date = forecastWeather.date();
     }
 
 
@@ -83,11 +79,4 @@ public class ForecastWetherDTO {
         this.visibility = visibility;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 }
