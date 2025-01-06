@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WeatherDTO {
 
+    private String temperature;
     private String humidity;
     private String min_temp;
     private String max_temp;
@@ -26,6 +27,7 @@ public class WeatherDTO {
         this.visibility = weather.visibility();
         this.sunrise = weather.sys().sunrise();
         this.sunset = weather.sys().sunset();
+        this.temperature = weather.main().temp();
     }
 
     public String getHumidity() {
@@ -90,5 +92,13 @@ public class WeatherDTO {
 
     public void setSunset(String sunset) {
         this.sunset = sunset;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
     }
 }

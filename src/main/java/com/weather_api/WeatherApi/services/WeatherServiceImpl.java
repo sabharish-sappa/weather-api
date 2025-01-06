@@ -52,10 +52,12 @@ public class WeatherServiceImpl implements WeatherService{
         }
 
         catch (Exception e){
-            throw new WeatherServiceException(e.getMessage(),e);
+            throw new WeatherServiceException(e.getMessage());
         }
 
     }
+
+
 
     @Override
     public CitiesWeather getCitiesWeather(List<String> cities) {
@@ -70,7 +72,7 @@ public class WeatherServiceImpl implements WeatherService{
                 WeatherDTO weatherDTO = getCityWeather(city);
                 successCitiesWeather.add(new CityWeatherPair(city, weatherDTO));
             } catch (WeatherServiceException ex) {
-               failedCityPairs.add(new FailedCityPair(city,"No City found with the given name"));
+               failedCityPairs.add(new FailedCityPair(city,"No city found with the given name."));
             }
 
         }
