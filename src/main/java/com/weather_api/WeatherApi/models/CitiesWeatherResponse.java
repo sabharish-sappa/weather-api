@@ -11,53 +11,75 @@ import java.util.List;
 @JsonPropertyOrder({"result_message","successful_cities","failed_cities"})
 public class CitiesWeatherResponse {
     String resultMessage;
-    List<CityWeatherPair> successfulCities;
-    List<FailedCityPair>failedCities;
+    CitiesWeather citiesWeather;
 
     public CitiesWeatherResponse(){};
 
-    public CitiesWeatherResponse(String resultMessage, List<CityWeatherPair> successfulCities){
-        this.successfulCities = successfulCities;
-        this.resultMessage = resultMessage;
-    }
-
     public CitiesWeatherResponse(String resultMessage, CitiesWeather citiesWeather){
+        this.citiesWeather = citiesWeather;
         this.resultMessage = resultMessage;
-        this.successfulCities = citiesWeather.getSuccessfulCities();
-        this.failedCities = citiesWeather.getFailedCities();
-
-        if(this.failedCities.size()==0)
-            this.failedCities=null;
     }
 
-
-
-    @JsonProperty("result_message")
     public String getResultMessage() {
         return resultMessage;
     }
 
-
+    @JsonProperty("result_message")
     public void setResultMessage(String resultMessage) {
         this.resultMessage = resultMessage;
     }
 
-
-    @JsonProperty("successful_cities")
-    public List<CityWeatherPair> getSuccessfulCities() {
-        return successfulCities;
+    @JsonProperty("weather_data")
+    public CitiesWeather getCitiesWeather() {
+        return citiesWeather;
     }
 
-    public void setSuccessfulCities(List<CityWeatherPair> weatherData) {
-        this.successfulCities = weatherData;
+    public void setCitiesWeather(CitiesWeather citiesWeather) {
+        this.citiesWeather = citiesWeather;
     }
 
-    @JsonProperty("failed_cities")
-    public List<FailedCityPair> getFailedCities() {
-        return failedCities;
-    }
-
-    public void setFailedCities(List<FailedCityPair> failedCities) {
-        this.failedCities = failedCities;
-    }
+    //    public CitiesWeatherResponse(String resultMessage, List<CityWeatherPair> successfulCities){
+//        this.successfulCities = successfulCities;
+//        this.resultMessage = resultMessage;
+//    }
+//
+//    public CitiesWeatherResponse(String resultMessage, CitiesWeather citiesWeather){
+//        this.resultMessage = resultMessage;
+//        this.successfulCities = citiesWeather.getSuccessfulCities();
+//        this.failedCities = citiesWeather.getFailedCities();
+//
+//        if(this.failedCities.size()==0)
+//            this.failedCities=null;
+//    }
+//
+//
+//
+//    @JsonProperty("result_message")
+//    public String getResultMessage() {
+//        return resultMessage;
+//    }
+//
+//
+//    public void setResultMessage(String resultMessage) {
+//        this.resultMessage = resultMessage;
+//    }
+//
+//
+//    @JsonProperty("successful_cities")
+//    public List<CityWeatherPair> getSuccessfulCities() {
+//        return successfulCities;
+//    }
+//
+//    public void setSuccessfulCities(List<CityWeatherPair> weatherData) {
+//        this.successfulCities = weatherData;
+//    }
+//
+//    @JsonProperty("failed_cities")
+//    public List<FailedCityPair> getFailedCities() {
+//        return failedCities;
+//    }
+//
+//    public void setFailedCities(List<FailedCityPair> failedCities) {
+//        this.failedCities = failedCities;
+//    }
 }
