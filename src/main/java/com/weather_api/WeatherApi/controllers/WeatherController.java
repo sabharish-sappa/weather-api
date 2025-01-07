@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping("/weather/v1/")
+@RequestMapping("/v1/weather/")
 public class WeatherController {
 
 
@@ -48,8 +48,8 @@ public class WeatherController {
 
 
 
-    @GetMapping("/today/{city}")
-    public CityWeatherResponse getCityWeather(@PathVariable("city") String city) {
+    @GetMapping("/today")
+    public CityWeatherResponse getCityWeather(@RequestParam(value = "city",required = false) String city) {
 
         try{
 
@@ -83,8 +83,8 @@ public class WeatherController {
 
 
 
-    @GetMapping("/today/cities/{cities}")
-    public CitiesWeatherResponse getCitiesWeather(@PathVariable("cities") String citiesString) {
+    @GetMapping("/today/multiple")
+    public CitiesWeatherResponse getCitiesWeather(@RequestParam(value = "cities",required = false) String citiesString) {
 
         if(citiesString == null || citiesString.trim().isEmpty())
             throw new WeatherServiceException("Cities value cannot not be empty");

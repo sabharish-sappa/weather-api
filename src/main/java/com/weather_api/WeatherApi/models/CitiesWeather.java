@@ -1,5 +1,7 @@
 package com.weather_api.WeatherApi.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class CitiesWeather {
@@ -13,6 +15,7 @@ public class CitiesWeather {
         this.failedCities = failedCities;
     }
 
+    @JsonProperty("successful_cities")
     public List<CityWeatherPair> getSuccessfulCities() {
         return successfulCities;
     }
@@ -21,6 +24,7 @@ public class CitiesWeather {
         this.successfulCities = weatherData;
     }
 
+    @JsonProperty("failed_cities")
     public List<FailedCityPair> getFailedCities() {
         return failedCities;
     }

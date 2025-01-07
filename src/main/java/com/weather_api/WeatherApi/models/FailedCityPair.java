@@ -2,14 +2,14 @@ package com.weather_api.WeatherApi.models;
 
 public class FailedCityPair {
     String city;
-    String reason;
+    String message;
 
 
     public FailedCityPair(){};
 
-    public FailedCityPair(String city, String reason) {
+    public FailedCityPair(String city, String message) {
         this.city = city;
-        this.reason = reason;
+        this.message = message;
     }
 
     public String getCity() {
@@ -20,11 +20,11 @@ public class FailedCityPair {
         this.city = city;
     }
 
-    public String getReason() {
-        return reason;
+    public String getMessage() {
+        return message;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setMessage(String reason) {
+        this.message = reason;
     }
 }

@@ -89,23 +89,5 @@ class LocationServiceImplTest {
         assertNull(result);
     }
 
-//    @Test
-//    void testGetLocationCoordinates_ApiError() {
-//        // Arrange
-//        String city = "ErrorCity";
-//        String expectedUrl = "https://geocode.maps.co/search?q=" + city + "&api_key=" + geocodingApiKey;
-//
-//        when(restTemplate.exchange(
-//                eq(expectedUrl),
-//                eq(HttpMethod.GET),
-//                eq(null),
-//                any(ParameterizedTypeReference.class)
-//        )).thenThrow(new RuntimeException("API Error"));
-//
-//        // Act & Assert
-////        assertThrows(RuntimeException.class, () -> locationService.getLocationCooordinates(city));
-//        Location result = locationService.getLocationCooordinates(city);
-//        assertNull(result);
-//    }
 
 }

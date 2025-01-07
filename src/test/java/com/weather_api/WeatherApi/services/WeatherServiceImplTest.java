@@ -186,7 +186,7 @@ void getCitiesWeather_SomeCitiesFail_ReturnsPartialData() {
     // Assert failed cities
     assertEquals(1, result.getFailedCities().size());
     assertEquals("hyderabaddd", result.getFailedCities().get(0).getCity());
-    assertEquals("No city found with the given name.", result.getFailedCities().get(0).getReason());
+    assertEquals("No city found with the given name.", result.getFailedCities().get(0).getMessage());
 }
 
     @Test
@@ -203,7 +203,7 @@ void getCitiesWeather_SomeCitiesFail_ReturnsPartialData() {
         assertTrue(result.getSuccessfulCities().isEmpty());
         assertEquals(2, result.getFailedCities().size());
         assertEquals("bengaluru", result.getFailedCities().get(0).getCity());
-        assertEquals("No city found with the given name.", result.getFailedCities().get(0).getReason());
+        assertEquals("No city found with the given name.", result.getFailedCities().get(0).getMessage());
     }
 
     @Test
@@ -234,9 +234,9 @@ void getCitiesWeather_SomeCitiesFail_ReturnsPartialData() {
 
         // Check failed cities
         assertEquals("invalidcity1", result.getFailedCities().get(0).getCity());
-        assertEquals("No city found with the given name.", result.getFailedCities().get(0).getReason());
+        assertEquals("No city found with the given name.", result.getFailedCities().get(0).getMessage());
         assertEquals("invalidcity2", result.getFailedCities().get(1).getCity());
-        assertEquals("No city found with the given name.", result.getFailedCities().get(1).getReason());
+        assertEquals("No city found with the given name.", result.getFailedCities().get(1).getMessage());
     }
 
 

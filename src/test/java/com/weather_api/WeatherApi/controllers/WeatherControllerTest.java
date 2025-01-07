@@ -110,15 +110,13 @@ class WeatherControllerTest {
 
     @Test
     void getCitiesWeather_InvalidCities_ThrowsBadRequest() {
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        WeatherServiceException exception = assertThrows(WeatherServiceException.class,
                 () -> weatherController.getCitiesWeather(null));
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertEquals("Cities value cannot not be empty", exception.getReason());
+        assertEquals("Cities value cannot not be empty", exception.getMessage());
 
-        exception = assertThrows(ResponseStatusException.class,
+        exception = assertThrows(WeatherServiceException.class,
                 () -> weatherController.getCitiesWeather(" "));
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertEquals("Cities value cannot not be empty", exception.getReason());
+        assertEquals("Cities value cannot not be empty", exception.getMessage());
     }
 
     @Test
