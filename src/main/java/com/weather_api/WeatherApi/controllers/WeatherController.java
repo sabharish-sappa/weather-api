@@ -2,9 +2,8 @@ package com.weather_api.WeatherApi.controllers;
 
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.weather_api.WeatherApi.WeatherServiceException;
+import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
 import com.weather_api.WeatherApi.models.*;
 import com.weather_api.WeatherApi.services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/weather/v1/")
@@ -43,10 +39,10 @@ public class WeatherController {
     public  void cityValidation(String city){
 
         if(city==null || city.trim().isEmpty())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"City name cannot be null or empty");
+            throw new WeatherServiceException("City name cannot be null or empty");
 
         if (!city.trim().matches("^[a-zA-Z ]+$")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "City name '" + city.trim() + "' must contain only letters and spaces.");
+            throw new WeatherServiceException("City name '" + city.trim() + "' must contain only letters and spaces.");
         }
     }
 
@@ -71,12 +67,16 @@ public class WeatherController {
 
         catch (HttpClientErrorException clientErrorException){
 
-            return new CityWeatherResponse("No City found with the given name.");
+            throw new WeatherServiceException("No City found with the given name.");
+        }
+
+        catch (ResponseStatusException ex){
+            throw new ResponseStatusException(ex.getStatusCode(),ex.getMessage());
         }
 
 
         catch (Exception e){
-            return new CityWeatherResponse(e.getMessage());
+            throw  new WeatherServiceException(e.getMessage());
         }
 
     }
@@ -87,7 +87,7 @@ public class WeatherController {
     public CitiesWeatherResponse getCitiesWeather(@PathVariable("cities") String citiesString) {
 
         if(citiesString == null || citiesString.trim().isEmpty())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cities value cannot not be empty");
+            throw new WeatherServiceException("Cities value cannot not be empty");
 
         String[] cities = citiesString.split(",");
 
@@ -107,7 +107,7 @@ public class WeatherController {
             cityValidation(city);
 
             if(days<1 || days>5)
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"days value must be between 1 and 5");
+                throw new WeatherServiceException("Days value must be between 1 and 5");
 
             city = city.trim();
 
@@ -128,13 +128,13 @@ public class WeatherController {
         }
         catch (HttpClientErrorException clientErrorException){
 
-            return new ForecastWeatherResponse("No City found with the given name.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No City found with the given name.");
         }
 
 
         catch (Exception e){
-            System.out.println(e.getMessage());
-            return new ForecastWeatherResponse(e.getMessage());
+
+            throw new WeatherServiceException(e.getMessage());
         }
 
     }

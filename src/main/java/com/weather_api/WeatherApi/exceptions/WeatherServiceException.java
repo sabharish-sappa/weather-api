@@ -1,4 +1,4 @@
-package com.weather_api.WeatherApi;
+package com.weather_api.WeatherApi.exceptions;
 
 
 public class WeatherServiceException extends RuntimeException{

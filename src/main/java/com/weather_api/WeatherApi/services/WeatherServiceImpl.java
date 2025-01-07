@@ -1,16 +1,13 @@
 package com.weather_api.WeatherApi.services;
 
-import com.weather_api.WeatherApi.WeatherServiceException;
+import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
 import com.weather_api.WeatherApi.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

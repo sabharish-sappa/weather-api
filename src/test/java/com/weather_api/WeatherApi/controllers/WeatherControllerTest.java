@@ -1,6 +1,6 @@
 package com.weather_api.WeatherApi.controllers;
 
-import com.weather_api.WeatherApi.WeatherServiceException;
+import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
 import com.weather_api.WeatherApi.models.*;
 import com.weather_api.WeatherApi.services.WeatherService;
 import org.junit.jupiter.api.AfterEach;
@@ -63,11 +63,10 @@ class WeatherControllerTest {
         when(weatherService.getCityWeather("invalidcity"))
                 .thenThrow(new WeatherServiceException("No City found with the given name."));
 
-        CityWeatherResponse response = weatherController.getCityWeather("invalidcity");
 
-        assertNotNull(response);
-        assertEquals("No City found with the given name.", response.getResultMessage());
-        assertNull(response.getWeatherDTO());
+        assertThrowsExactly(WeatherServiceException.class,()->{
+            weatherController.getCityWeather("invalidcity");
+        });
     }
 
 
@@ -76,16 +75,14 @@ class WeatherControllerTest {
     @Test
     void getCityWeather_NullOrEmptyCity_ThrowsBadRequest() {
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+        WeatherServiceException exception = assertThrows(WeatherServiceException.class,
                 () -> weatherController.getCityWeather(null));
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getReason());
-        assertEquals("City name cannot be null or empty", exception.getReason());
+        assertEquals("City name cannot be null or empty", exception.getMessage());
 
-        exception = assertThrows(ResponseStatusException.class,
+        exception = assertThrows(WeatherServiceException.class,
                 () -> weatherController.getCityWeather(" "));
 
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getReason());
-        assertEquals("City name cannot be null or empty", exception.getReason());
+        assertEquals("City name cannot be null or empty", exception.getMessage());
     }
 
     @Test
@@ -124,6 +121,53 @@ class WeatherControllerTest {
         assertEquals("Cities value cannot not be empty", exception.getReason());
     }
 
+    @Test
+    void getForecastByCity_ValidCity_ReturnsForecastResponse() {
+
+        ForecastWeather mockForecastWeather1 = new ForecastWeather(new ForecastMain(12,23.0,34,456,3233),2344,"2025-01-07 12:00:00");
+        ForecastWeather mockForecastWeather2 = new ForecastWeather(new ForecastMain(22,23.0,34,456,3233),2344,"2025-01-07 15:00:00");
+        ForecastWeather mockForecastWeather3 = new ForecastWeather(new ForecastMain(32,23.0,34,456,3233),2344,"2025-01-07 18:00:00");
+        ForecastWeather mockForecastWeather4 = new ForecastWeather(new ForecastMain(42,23.0,34,456,3233),2344,"2025-01-07 21:00:00");
+        ForecastWeather mockForecastWeather5 = new ForecastWeather(new ForecastMain(52,23.0,34,456,3233),2344,"2025-01-07 24:00:00");
+        ForecastWeather mockForecastWeather6 = new ForecastWeather(new ForecastMain(62,23.0,34,456,3233),2344,"2025-01-08 03:00:00");
+        ForecastWeather mockForecastWeather7 = new ForecastWeather(new ForecastMain(72,23.0,34,456,3233),2344,"2025-01-08 06:00:00");
+        ForecastWeather mockForecastWeather8 = new ForecastWeather(new ForecastMain(82,23.0,34,456,3233),2344,"2025-01-08 09:00:00");
+
+
+        ForecastWeatherList mockForecastList = new ForecastWeatherList(List.of(mockForecastWeather1,mockForecastWeather2,mockForecastWeather3,mockForecastWeather4,mockForecastWeather5,mockForecastWeather6,mockForecastWeather7,mockForecastWeather8));
+        when(weatherService.getCityForecastedWeather("bengaluru")).thenReturn(mockForecastList);
+
+        ForecastWeatherResponse response = weatherController.getForecastByCity("bengaluru", 1);
+
+        assertNotNull(response);
+        assertEquals("success", response.getResultMessage());
+        assertTrue(response.getForecastWeatherData().size() <= 1 * 8);
+    }
+
+    @Test
+    void getForecastByCity_InvalidCity_ThrowsException() {
+        // Mocking
+        when(weatherService.getCityForecastedWeather("invalidcity"))
+                .thenThrow(new WeatherServiceException("No City found with the given name."));
+
+
+        assertThrowsExactly(WeatherServiceException.class,()->{
+            weatherController.getForecastByCity("invalidcity", 3);
+        });
+
+
+    }
+
+    @Test
+    void getForecastByCity_InvalidDays_ThrowsBadRequest() {
+        WeatherServiceException exception = assertThrows(WeatherServiceException.class,
+                () -> weatherController.getForecastByCity("bengaluru", 0));
+        assertEquals("Days value must be between 1 and 5", exception.getMessage());
+
+        exception = assertThrows(WeatherServiceException.class,
+                () -> weatherController.getForecastByCity("bengaluru", 6));
+        assertEquals("Days value must be between 1 and 5", exception.getMessage());
+    }
 
     @Test
     void testGetForecastByCity() {
