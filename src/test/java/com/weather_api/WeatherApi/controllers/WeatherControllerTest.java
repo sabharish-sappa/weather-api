@@ -15,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 
@@ -28,7 +30,6 @@ class WeatherControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-//        weatherController.weatherService = weatherService;
 
     }
 
@@ -168,6 +169,18 @@ class WeatherControllerTest {
     }
 
     @Test
-    void testGetForecastByCity() {
+    void getForecastByCity_DaysNotMentioned_ThrowsBadRequest() {
+        WeatherServiceException exception = assertThrows(WeatherServiceException.class,
+                () -> weatherController.getForecastByCity("palasa",null));
+        assertEquals("Query Parameter days is required.", exception.getMessage());
     }
+
+    @Test
+    void getForecastByCity_CityAndDaysNotMentioned_ThrowsBadRequest() {
+        WeatherServiceException exception = assertThrows(WeatherServiceException.class,
+                () -> weatherController.getForecastByCity(null,null));
+        assertEquals("City name cannot be null or empty", exception.getMessage());
+    }
+
+
 }
