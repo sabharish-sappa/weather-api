@@ -38,6 +38,7 @@ public class WeatherController {
 
     public  void cityValidation(String city){
 
+
         if(city==null || city.trim().isEmpty())
             throw new WeatherServiceException("City name cannot be null or empty");
 
@@ -99,12 +100,16 @@ public class WeatherController {
         return new CitiesWeatherResponse("success",weatherService.getCitiesWeather(Arrays.asList(cities)));
     }
 
-    @GetMapping("/forecast/{city}")
-    public ForecastWeatherResponse getForecastByCity(@PathVariable("city") String city, @RequestParam(value = "days",defaultValue = "5") int days){
+    @GetMapping("/forecast")
+    public ForecastWeatherResponse getForecastByCity(@RequestParam(value = "city", required = false)String city, @RequestParam(value = "days",required = false) Integer days){
 
         try {
 
             cityValidation(city);
+
+            if(days==null)
+                throw new WeatherServiceException("Query Parameter days is required.");
+
 
             if(days<1 || days>5)
                 throw new WeatherServiceException("Days value must be between 1 and 5");
