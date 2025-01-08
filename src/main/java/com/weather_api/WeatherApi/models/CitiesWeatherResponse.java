@@ -9,8 +9,8 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"result_message","successful_cities","failed_cities"})
-public class CitiesWeatherResponse {
-    String resultMessage;
+public class CitiesWeatherResponse extends Response {
+//    String resultMessage;
     CitiesWeather citiesWeather;
 
     public CitiesWeatherResponse(){};
@@ -19,15 +19,15 @@ public class CitiesWeatherResponse {
         this.citiesWeather = citiesWeather;
         this.resultMessage = resultMessage;
     }
-
-    public String getResultMessage() {
-        return resultMessage;
-    }
-
-    @JsonProperty("result_message")
-    public void setResultMessage(String resultMessage) {
-        this.resultMessage = resultMessage;
-    }
+//
+//    public String getResultMessage() {
+//        return resultMessage;
+//    }
+//
+//    @JsonProperty("result_message")
+//    public void setResultMessage(String resultMessage) {
+//        this.resultMessage = resultMessage;
+//    }
 
     @JsonProperty("weather_data")
     public CitiesWeather getCitiesWeather() {

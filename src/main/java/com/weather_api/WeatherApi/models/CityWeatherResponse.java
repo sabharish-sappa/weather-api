@@ -9,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"result_message","result_code","city","weather"})
-public class CityWeatherResponse {
+public class CityWeatherResponse  extends Response{
 
 
-    String resultMessage;
+//    String resultMessage;
     WeatherDTO weatherDTO;
 
     public CityWeatherResponse(String city, String resultMessage, Weather weather) {
@@ -40,14 +40,14 @@ public class CityWeatherResponse {
 
     public CityWeatherResponse(){}
 
-    @JsonProperty("result_message")
-    public String getResultMessage() {
-        return resultMessage;
-    }
-
-    public void setResultMessage(String resultMessage) {
-        this.resultMessage = resultMessage;
-    }
+//    @JsonProperty("result_message")
+//    public String getResultMessage() {
+//        return resultMessage;
+//    }
+//
+//    public void setResultMessage(String resultMessage) {
+//        this.resultMessage = resultMessage;
+//    }
 
     public WeatherDTO getWeather() {
         return weatherDTO;
