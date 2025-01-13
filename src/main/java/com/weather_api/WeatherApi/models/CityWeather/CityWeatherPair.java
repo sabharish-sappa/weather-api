@@ -1,4 +1,4 @@
-package com.weather_api.WeatherApi.models;
+package com.weather_api.WeatherApi.models.CityWeather;
 
 public class CityWeatherPair {
 

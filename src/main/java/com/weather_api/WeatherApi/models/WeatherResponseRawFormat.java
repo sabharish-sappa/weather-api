@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Weather1 {
+public class WeatherResponseRawFormat {
 
     String humidity;
     String visibility;
@@ -21,11 +21,11 @@ public class Weather1 {
 
 
 
-    public Weather1(){
+    public WeatherResponseRawFormat(){
 
     }
 
-    public Weather1(String humidity, String visibility, String pressure, String minTemp, String maxTemp, String sunrise, String sunset, String seaLevel) {
+    public WeatherResponseRawFormat(String humidity, String visibility, String pressure, String minTemp, String maxTemp, String sunrise, String sunset, String seaLevel) {
         this.humidity = humidity;
         this.visibility = visibility;
         this.pressure = pressure;

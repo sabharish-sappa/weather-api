@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
-    String resultMessage;
+    protected String resultMessage;
 //    int statusCode;
 
     public Response(String resultMessage) {

@@ -17,13 +17,16 @@ public class LocationServiceImpl implements LocationService{
     @Value("${geocoding.api-key}")
     String geocodingApikey;
 
+    @Value("${geocoding.base-url}")
+    String geocodingBaseUrl;
+
     @Autowired
     RestTemplate restTemplate;
 
     @Override
     public Location getLocationCooordinates(String city) {
 
-        String url = "https://geocode.maps.co/search?q="+city+"&api_key="+geocodingApikey;
+        String url = geocodingBaseUrl+"/search?q="+city+"&api_key="+geocodingApikey;
 
 
         ResponseEntity<List<Location>> responseEntity = restTemplate.exchange(
@@ -31,7 +34,6 @@ public class LocationServiceImpl implements LocationService{
                 org.springframework.http.HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Location>>() {}
-
         );
 
         List<Location> locationList = responseEntity.getBody();

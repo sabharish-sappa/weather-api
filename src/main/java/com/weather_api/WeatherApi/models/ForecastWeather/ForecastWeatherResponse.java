@@ -1,8 +1,10 @@
-package com.weather_api.WeatherApi.models;
+package com.weather_api.WeatherApi.models.ForecastWeather;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.weather_api.WeatherApi.models.CitiesWeather.DateForecastedWeatherPair;
+import com.weather_api.WeatherApi.models.Response;
 
 import java.util.ArrayList;
 import java.util.List;

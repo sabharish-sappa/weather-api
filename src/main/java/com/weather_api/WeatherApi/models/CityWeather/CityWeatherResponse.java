@@ -1,15 +1,15 @@
-package com.weather_api.WeatherApi.models;
+package com.weather_api.WeatherApi.models.CityWeather;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
+import com.weather_api.WeatherApi.models.Response;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"result_message","result_code","city","weather"})
-public class CityWeatherResponse  extends Response{
+public class CityWeatherResponse  extends Response {
 
 
 //    String resultMessage;

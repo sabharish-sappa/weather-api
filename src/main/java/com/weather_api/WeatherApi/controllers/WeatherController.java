@@ -4,7 +4,11 @@ package com.weather_api.WeatherApi.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
-import com.weather_api.WeatherApi.models.*;
+import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeatherResponse;
+import com.weather_api.WeatherApi.models.CityWeather.CityWeatherResponse;
+import com.weather_api.WeatherApi.models.CityWeather.WeatherDTO;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherResponse;
 import com.weather_api.WeatherApi.services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,12 +30,6 @@ public class WeatherController {
 
     @Autowired
     ObjectMapper om;
-
-    @Value("${weather.api-key}")
-    String weatherApiKey;
-
-    @Value("${geocoding.api-key}")
-    String geocodingApikey;
 
     @Autowired
     WeatherService weatherService;
@@ -109,7 +107,6 @@ public class WeatherController {
 
             if(days==null)
                 throw new WeatherServiceException("Query Parameter days is required.");
-
 
             if(days<1 || days>5)
                 throw new WeatherServiceException("Days value must be between 1 and 5");

@@ -2,6 +2,12 @@ package com.weather_api.WeatherApi.services;
 
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
 import com.weather_api.WeatherApi.models.*;
+import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeather;
+import com.weather_api.WeatherApi.models.CitiesWeather.FailedCityPair;
+import com.weather_api.WeatherApi.models.CityWeather.CityWeatherPair;
+import com.weather_api.WeatherApi.models.CityWeather.Weather;
+import com.weather_api.WeatherApi.models.CityWeather.WeatherDTO;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,8 +21,11 @@ import java.util.List;
 @Service
 public class WeatherServiceImpl implements WeatherService{
 
-    @Value("${weather.api-key}")
-    String weatherApiKey;
+    @Value("${openweather.api-key}")
+    String openweatherApiKey;
+
+    @Value("${openweather.base-url}")
+    String openweatherBaseUrl;
 
 
     @Autowired
@@ -35,9 +44,9 @@ public class WeatherServiceImpl implements WeatherService{
             if (locationCordinates == null)
                 throw new WeatherServiceException("No city found with the given name.");
 
-            String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + weatherApiKey;
+            String url = openweatherBaseUrl+"/data/2.5/weather?q=" + city + "&units=metric&appid=" + openweatherApiKey;
 
-            String locationBasedUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + locationCordinates.lat() + "&lon=" + locationCordinates.lng() + "&units=metric&appid=" + weatherApiKey;
+            String locationBasedUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + locationCordinates.lat() + "&lon=" + locationCordinates.lng() + "&units=metric&appid=" + openweatherApiKey;
 
             Weather weather = restTemplate.getForObject(locationBasedUrl, Weather.class);
 
@@ -74,7 +83,6 @@ public class WeatherServiceImpl implements WeatherService{
 
         }
 
-        failedCityPairs.forEach(System.out::println);
 
         return new CitiesWeather(successCitiesWeather,failedCityPairs);
 
@@ -90,7 +98,7 @@ public class WeatherServiceImpl implements WeatherService{
             if (locationCordinates == null)
                 throw new WeatherServiceException("No city found with the given name.");
 
-            String url = "https://api.openweathermap.org/data/2.5/forecast?lat=" + locationCordinates.lat() + "&lon=" + locationCordinates.lng() + "&appid=" + weatherApiKey;
+            String url = openweatherBaseUrl+"/data/2.5/forecast?lat=" + locationCordinates.lat() + "&lon=" + locationCordinates.lng() + "&appid=" + openweatherApiKey;
 
             ForecastWeatherList forecastWeatherList = restTemplate.getForObject(url, ForecastWeatherList.class);
             return forecastWeatherList;

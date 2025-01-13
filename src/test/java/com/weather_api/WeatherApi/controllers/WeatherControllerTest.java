@@ -1,7 +1,13 @@
 package com.weather_api.WeatherApi.controllers;
 
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
-import com.weather_api.WeatherApi.models.*;
+import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeather;
+import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeatherResponse;
+import com.weather_api.WeatherApi.models.CityWeather.*;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastMain;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeather;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherResponse;
 import com.weather_api.WeatherApi.services.WeatherService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,14 +15,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 

@@ -1,8 +1,7 @@
-package com.weather_api.WeatherApi.models;
+package com.weather_api.WeatherApi.models.ForecastWeather;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record ForecastMain(

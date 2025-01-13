@@ -1,6 +1,7 @@
-package com.weather_api.WeatherApi.models;
+package com.weather_api.WeatherApi.models.CitiesWeather;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherDTO;
 
 public class DateForecastedWeatherPair {
     String date;

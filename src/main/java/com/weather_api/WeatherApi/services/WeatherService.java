@@ -1,9 +1,8 @@
 package com.weather_api.WeatherApi.services;
 
-import com.weather_api.WeatherApi.models.CitiesWeather;
-import com.weather_api.WeatherApi.models.ForecastWeatherList;
-import com.weather_api.WeatherApi.models.CityWeatherPair;
-import com.weather_api.WeatherApi.models.WeatherDTO;
+import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeather;
+import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
+import com.weather_api.WeatherApi.models.CityWeather.WeatherDTO;
 
 import java.util.List;
 
