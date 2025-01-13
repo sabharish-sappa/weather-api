@@ -1,4 +1,4 @@
-package com.weather_api.WeatherApi.models.CitiesWeather;
+package com.weather_api.WeatherApi.models.citiesWeather;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

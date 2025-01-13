@@ -1,14 +1,14 @@
 package com.weather_api.WeatherApi.controllers;
 
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
-import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeather;
-import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeatherResponse;
-import com.weather_api.WeatherApi.models.CityWeather.*;
-import com.weather_api.WeatherApi.models.ForecastWeather.ForecastMain;
-import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeather;
-import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
-import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherResponse;
-import com.weather_api.WeatherApi.services.WeatherService;
+import com.weather_api.WeatherApi.models.citiesWeather.CitiesWeather;
+import com.weather_api.WeatherApi.models.citiesWeather.CitiesWeatherResponse;
+import com.weather_api.WeatherApi.models.cityWeather.*;
+import com.weather_api.WeatherApi.models.forecastWeather.ForecastMain;
+import com.weather_api.WeatherApi.models.forecastWeather.ForecastWeather;
+import com.weather_api.WeatherApi.models.forecastWeather.ForecastWeatherList;
+import com.weather_api.WeatherApi.models.forecastWeather.ForecastWeatherResponse;
+import com.weather_api.WeatherApi.services.weatherService.WeatherService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

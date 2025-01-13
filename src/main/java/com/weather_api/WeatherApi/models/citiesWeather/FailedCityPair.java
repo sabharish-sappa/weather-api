@@ -1,4 +1,4 @@
-package com.weather_api.WeatherApi.models.CitiesWeather;
+package com.weather_api.WeatherApi.models.citiesWeather;
 
 public class FailedCityPair {
     String city;

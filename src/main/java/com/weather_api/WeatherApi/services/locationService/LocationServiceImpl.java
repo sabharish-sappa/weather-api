@@ -1,4 +1,4 @@
-package com.weather_api.WeatherApi.services;
+package com.weather_api.WeatherApi.services.locationService;
 
 import com.weather_api.WeatherApi.models.Location;
 import org.springframework.beans.factory.annotation.Autowired;

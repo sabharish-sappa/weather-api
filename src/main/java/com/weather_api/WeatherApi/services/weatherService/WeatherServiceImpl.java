@@ -1,13 +1,14 @@
-package com.weather_api.WeatherApi.services;
+package com.weather_api.WeatherApi.services.weatherService;
 
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
 import com.weather_api.WeatherApi.models.*;
-import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeather;
-import com.weather_api.WeatherApi.models.CitiesWeather.FailedCityPair;
-import com.weather_api.WeatherApi.models.CityWeather.CityWeatherPair;
-import com.weather_api.WeatherApi.models.CityWeather.CityWeather;
-import com.weather_api.WeatherApi.models.CityWeather.CityWeatherDTO;
-import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
+import com.weather_api.WeatherApi.models.citiesWeather.CitiesWeather;
+import com.weather_api.WeatherApi.models.citiesWeather.FailedCityPair;
+import com.weather_api.WeatherApi.models.cityWeather.CityWeatherPair;
+import com.weather_api.WeatherApi.models.cityWeather.CityWeather;
+import com.weather_api.WeatherApi.models.cityWeather.CityWeatherDTO;
+import com.weather_api.WeatherApi.models.forecastWeather.ForecastWeatherList;
+import com.weather_api.WeatherApi.services.locationService.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

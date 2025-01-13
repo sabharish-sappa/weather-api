@@ -1,12 +1,11 @@
 package com.weather_api.WeatherApi.services;
 
 import com.weather_api.WeatherApi.models.Location;
+import com.weather_api.WeatherApi.services.locationService.LocationServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

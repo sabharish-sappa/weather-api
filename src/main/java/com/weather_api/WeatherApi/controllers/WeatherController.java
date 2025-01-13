@@ -4,12 +4,12 @@ package com.weather_api.WeatherApi.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
-import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeatherResponse;
-import com.weather_api.WeatherApi.models.CityWeather.CityWeatherResponse;
-import com.weather_api.WeatherApi.models.CityWeather.CityWeatherDTO;
-import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
-import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherResponse;
-import com.weather_api.WeatherApi.services.WeatherService;
+import com.weather_api.WeatherApi.models.citiesWeather.CitiesWeatherResponse;
+import com.weather_api.WeatherApi.models.cityWeather.CityWeatherResponse;
+import com.weather_api.WeatherApi.models.cityWeather.CityWeatherDTO;
+import com.weather_api.WeatherApi.models.forecastWeather.ForecastWeatherList;
+import com.weather_api.WeatherApi.models.forecastWeather.ForecastWeatherResponse;
+import com.weather_api.WeatherApi.services.weatherService.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -2,8 +2,10 @@ package com.weather_api.WeatherApi.services;
 
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
 import com.weather_api.WeatherApi.models.*;
-import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeather;
-import com.weather_api.WeatherApi.models.CityWeather.*;
+import com.weather_api.WeatherApi.models.citiesWeather.CitiesWeather;
+import com.weather_api.WeatherApi.models.cityWeather.*;
+import com.weather_api.WeatherApi.services.locationService.LocationService;
+import com.weather_api.WeatherApi.services.weatherService.WeatherServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
