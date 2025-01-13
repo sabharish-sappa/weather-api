@@ -49,8 +49,8 @@ class WeatherControllerTest {
 
     @Test
     void getCityWeather_ValidCity_ReturnsWeatherResponse() {
-        Weather mockWeather1 = new Weather(new WeatherMain("15", "10", "20", "1013", "60", "1013"), "10000", new WeatherSys("1704441600", "1704484800"));
-        WeatherDTO mockWeatherDTO = new WeatherDTO(mockWeather1);
+        CityWeather mockWeather1 = new CityWeather(new CityWeatherMain("15", "10", "20", "1013", "60", "1013"), "10000", new CityWeatherSys("1704441600", "1704484800"));
+        CityWeatherDTO mockWeatherDTO = new CityWeatherDTO(mockWeather1);
 
         when(weatherService.getCityWeather("bengaluru")).thenReturn(mockWeatherDTO);
 
@@ -93,13 +93,13 @@ class WeatherControllerTest {
     void getCitiesWeather_ValidCities_ReturnsWeatherResponse() {
         List<String> cities = List.of("bengaluru", "hyderabad");
 
-        Weather mockWeather1 = new Weather(new WeatherMain("15", "10", "20", "1013", "60", "1013"), "10000", new WeatherSys("1704441600", "1704484800"));
-        Weather mockWeather2 = new Weather(new WeatherMain("25", "15", "30", "1013", "80", "1013"), "10000", new WeatherSys("1754645441600", "6456532432"));
+        CityWeather mockWeather1 = new CityWeather(new CityWeatherMain("15", "10", "20", "1013", "60", "1013"), "10000", new CityWeatherSys("1704441600", "1704484800"));
+        CityWeather mockWeather2 = new CityWeather(new CityWeatherMain("25", "15", "30", "1013", "80", "1013"), "10000", new CityWeatherSys("1754645441600", "6456532432"));
 
         CitiesWeather mockCitiesWeather = new CitiesWeather(
                 List.of(
-                        new CityWeatherPair("bengaluru", new WeatherDTO(mockWeather1)),
-                        new CityWeatherPair("delhi", new WeatherDTO(mockWeather2))
+                        new CityWeatherPair("bengaluru", new CityWeatherDTO(mockWeather1)),
+                        new CityWeatherPair("delhi", new CityWeatherDTO(mockWeather2))
                 ),
                 List.of()
         );

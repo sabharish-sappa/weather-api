@@ -4,7 +4,7 @@ package com.weather_api.WeatherApi.models.CityWeather;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class WeatherDTO {
+public class CityWeatherDTO {
 
     private String temperature;
     private String humidity;
@@ -17,7 +17,7 @@ public class WeatherDTO {
     private String sunset;
 
 
-    public WeatherDTO(Weather weather){
+    public CityWeatherDTO(CityWeather weather){
         this.humidity = weather.main().humidity();
         this.min_temp = weather.main().temp_min();
         this.max_temp = weather.main().temp_max();

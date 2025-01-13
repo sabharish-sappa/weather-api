@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record WeatherSys(String sunrise, String sunset){
+public record CityWeatherSys(String sunrise, String sunset){
 
     public String toFormatted(String timeStamp) {
 
@@ -19,7 +19,7 @@ public record WeatherSys(String sunrise, String sunset){
 
     }
 
-    public WeatherSys(String sunrise, String sunset){
+    public CityWeatherSys(String sunrise, String sunset){
         this.sunrise = toFormatted(sunrise);
         this.sunset = toFormatted(sunset);
     }

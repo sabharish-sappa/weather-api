@@ -5,8 +5,8 @@ import com.weather_api.WeatherApi.models.*;
 import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeather;
 import com.weather_api.WeatherApi.models.CitiesWeather.FailedCityPair;
 import com.weather_api.WeatherApi.models.CityWeather.CityWeatherPair;
-import com.weather_api.WeatherApi.models.CityWeather.Weather;
-import com.weather_api.WeatherApi.models.CityWeather.WeatherDTO;
+import com.weather_api.WeatherApi.models.CityWeather.CityWeather;
+import com.weather_api.WeatherApi.models.CityWeather.CityWeatherDTO;
 import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +35,7 @@ public class WeatherServiceImpl implements WeatherService{
     LocationService locationService;
 
     @Override
-    public WeatherDTO getCityWeather(String city) {
+    public CityWeatherDTO getCityWeather(String city) {
 
         try {
 
@@ -48,9 +48,9 @@ public class WeatherServiceImpl implements WeatherService{
 
             String locationBasedUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + locationCordinates.lat() + "&lon=" + locationCordinates.lng() + "&units=metric&appid=" + openweatherApiKey;
 
-            Weather weather = restTemplate.getForObject(locationBasedUrl, Weather.class);
+            CityWeather weather = restTemplate.getForObject(locationBasedUrl, CityWeather.class);
 
-            return new WeatherDTO(weather);
+            return new CityWeatherDTO(weather);
         }
 
         catch (HttpClientErrorException httpClientErrorException){
@@ -75,8 +75,8 @@ public class WeatherServiceImpl implements WeatherService{
         for (String city : cities) {
 
             try {
-                WeatherDTO weatherDTO = getCityWeather(city);
-                successCitiesWeather.add(new CityWeatherPair(city, weatherDTO));
+                CityWeatherDTO cityWeatherDTO = getCityWeather(city);
+                successCitiesWeather.add(new CityWeatherPair(city, cityWeatherDTO));
             } catch (WeatherServiceException ex) {
                failedCityPairs.add(new FailedCityPair(city,"No city found with the given name."));
             }

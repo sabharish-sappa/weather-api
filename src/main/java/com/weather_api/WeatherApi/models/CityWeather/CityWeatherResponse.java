@@ -13,26 +13,26 @@ public class CityWeatherResponse  extends Response {
 
 
 //    String resultMessage;
-    WeatherDTO weatherDTO;
+    CityWeatherDTO cityWeatherDTO;
 
-    public CityWeatherResponse(String city, String resultMessage, Weather weather) {
+    public CityWeatherResponse(String city, String resultMessage, CityWeather weather) {
 
         this.resultMessage = resultMessage;
-        this.weatherDTO = new WeatherDTO(weather);
+        this.cityWeatherDTO = new CityWeatherDTO(weather);
     }
 
     public CityWeatherResponse(String resultMessage){
         this.resultMessage = resultMessage;
     }
 
-    public CityWeatherResponse(String resultMessage, WeatherDTO weatherDTO) {
+    public CityWeatherResponse(String resultMessage, CityWeatherDTO cityWeatherDTO) {
         this.resultMessage = resultMessage;
-        this.weatherDTO = weatherDTO;
+        this.cityWeatherDTO = cityWeatherDTO;
     }
 
-    public CityWeatherResponse(String resultMessage, Weather weather) {
+    public CityWeatherResponse(String resultMessage, CityWeather weather) {
         this.resultMessage = resultMessage;
-        this.weatherDTO = new WeatherDTO(weather);
+        this.cityWeatherDTO = new CityWeatherDTO(weather);
     }
 
 
@@ -49,23 +49,23 @@ public class CityWeatherResponse  extends Response {
 //        this.resultMessage = resultMessage;
 //    }
 
-    public WeatherDTO getWeather() {
-        return weatherDTO;
+    public CityWeatherDTO getWeather() {
+        return cityWeatherDTO;
     }
 
-    public void setWeather(WeatherDTO weatherDTO) {
-        this.weatherDTO = weatherDTO;
+    public void setWeather(CityWeatherDTO cityWeatherDTO) {
+        this.cityWeatherDTO = cityWeatherDTO;
     }
 
 
 
     @JsonProperty("weather")
-    public WeatherDTO getWeatherDTO() {
-        return weatherDTO;
+    public CityWeatherDTO getWeatherDTO() {
+        return cityWeatherDTO;
     }
 
-    public void setWeatherDTO(WeatherDTO weatherDTO) {
-        this.weatherDTO = weatherDTO;
+    public void setWeatherDTO(CityWeatherDTO cityWeatherDTO) {
+        this.cityWeatherDTO = cityWeatherDTO;
     }
 }
 

@@ -6,12 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
 import com.weather_api.WeatherApi.models.CitiesWeather.CitiesWeatherResponse;
 import com.weather_api.WeatherApi.models.CityWeather.CityWeatherResponse;
-import com.weather_api.WeatherApi.models.CityWeather.WeatherDTO;
+import com.weather_api.WeatherApi.models.CityWeather.CityWeatherDTO;
 import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherList;
 import com.weather_api.WeatherApi.models.ForecastWeather.ForecastWeatherResponse;
 import com.weather_api.WeatherApi.services.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -54,13 +53,13 @@ public class WeatherController {
 
             cityValidation(city);
 
-            WeatherDTO weatherDTO = weatherService.getCityWeather(city);
+            CityWeatherDTO cityWeatherDTO = weatherService.getCityWeather(city);
 
-            if(weatherDTO==null)
+            if(cityWeatherDTO ==null)
                 return null;
 //            throw invalid input exception;
 
-            return new CityWeatherResponse("success",weatherDTO);
+            return new CityWeatherResponse("success", cityWeatherDTO);
 
         }
 

@@ -57,21 +57,21 @@ class WeatherServiceImplTest {
     void getCityWeather_ValidCity_ReturnsWeatherDTO() {
         String city = "bengaluru";
         Location mockLocation = new Location("12.9767936","77.590082");
-        Weather mockWeather = new Weather(new WeatherMain("15", "10", "20", "1013", "60", "0"), "10000", new WeatherSys("1704441600", "1704484800"));
+        CityWeather mockWeather = new CityWeather(new CityWeatherMain("15", "10", "20", "1013", "60", "0"), "10000", new CityWeatherSys("1704441600", "1704484800"));
 
         when(locationService.getLocationCooordinates(city)).thenReturn(mockLocation);
         when(restTemplate.getForObject(
                 eq("https://api.openweathermap.org/data/2.5/weather?lat=12.9767936&lon=77.590082&units=metric&appid=" + weatherApiKey),
-                eq(Weather.class)
+                eq(CityWeather.class)
         )).thenReturn(mockWeather);
 
-        WeatherDTO weatherDTO = weatherService.getCityWeather(city);
+        CityWeatherDTO cityWeatherDTO = weatherService.getCityWeather(city);
 
         // Assert
-        assertNotNull(weatherDTO);
-        assertEquals("15", weatherDTO.getTemperature());
+        assertNotNull(cityWeatherDTO);
+        assertEquals("15", cityWeatherDTO.getTemperature());
         verify(locationService).getLocationCooordinates(city);
-        verify(restTemplate).getForObject(anyString(), eq(Weather.class));
+        verify(restTemplate).getForObject(anyString(), eq(CityWeather.class));
     }
 
     @Test
@@ -95,7 +95,7 @@ class WeatherServiceImplTest {
         Location mockLocation = new Location("12.9767936","77.590082");
 
         when(locationService.getLocationCooordinates(city)).thenReturn(mockLocation);
-        when(restTemplate.getForObject(anyString(), eq(Weather.class)))
+        when(restTemplate.getForObject(anyString(), eq(CityWeather.class)))
                 .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND, "No city found with the given name."));
 
         WeatherServiceException exception = assertThrows(WeatherServiceException.class, () -> {
@@ -104,21 +104,21 @@ class WeatherServiceImplTest {
 
         assertTrue(exception.getMessage().contains("No city found with the given name."));
         verify(locationService).getLocationCooordinates(city);
-        verify(restTemplate).getForObject(anyString(), eq(Weather.class));
+        verify(restTemplate).getForObject(anyString(), eq(CityWeather.class));
     }
 
 
     @Test
     void getCitiesWeather_AllCitiesSuccessful_ReturnsWeatherData() {
 
-        Weather mockWeather1 = new Weather(new WeatherMain("15", "10", "20", "1013", "60", "1013"), "10000", new WeatherSys("1704441600", "1704484800"));
-        Weather mockWeather2 = new Weather(new WeatherMain("20", "20", "30", "1193", "80", "1193"), "10000", new WeatherSys("1704441600", "1704484800"));
+        CityWeather mockWeather1 = new CityWeather(new CityWeatherMain("15", "10", "20", "1013", "60", "1013"), "10000", new CityWeatherSys("1704441600", "1704484800"));
+        CityWeather mockWeather2 = new CityWeather(new CityWeatherMain("20", "20", "30", "1193", "80", "1193"), "10000", new CityWeatherSys("1704441600", "1704484800"));
 
         Location mockLocation1 = new Location("12.9767936","77.590082");
         Location mockLocation2 = new Location("17.360589","78.4740613");
 
-        CityWeatherPair mockedCityWeatherPair1 = new CityWeatherPair("bengaluru",new WeatherDTO(mockWeather1));
-        CityWeatherPair mockedCityWeatherPair2 = new CityWeatherPair("hyderabad",new WeatherDTO(mockWeather2));
+        CityWeatherPair mockedCityWeatherPair1 = new CityWeatherPair("bengaluru",new CityWeatherDTO(mockWeather1));
+        CityWeatherPair mockedCityWeatherPair2 = new CityWeatherPair("hyderabad",new CityWeatherDTO(mockWeather2));
 
         List<CityWeatherPair>mockedSuccessfulCities = new ArrayList<>();
         mockedSuccessfulCities.add(mockedCityWeatherPair1);
@@ -132,12 +132,12 @@ class WeatherServiceImplTest {
 
         when(restTemplate.getForObject(
                 eq("https://api.openweathermap.org/data/2.5/weather?lat=12.9767936&lon=77.590082&units=metric&appid=" + weatherApiKey),
-                eq(Weather.class)
+                eq(CityWeather.class)
         )).thenReturn(mockWeather1);
 
         lenient().when(restTemplate.getForObject(
                 eq("https://api.openweathermap.org/data/2.5/weather?lat=17.360589&lon=78.4740613&units=metric&appid=" + weatherApiKey),
-                eq(Weather.class)
+                eq(CityWeather.class)
         )).thenReturn(mockWeather2);
 
         List<String> cities = List.of("bengaluru", "hyderabad");
@@ -155,10 +155,10 @@ class WeatherServiceImplTest {
 @Test
 void getCitiesWeather_SomeCitiesFail_ReturnsPartialData() {
 
-    Weather mockWeather1 = new Weather(
-            new WeatherMain("15", "10", "20", "1013", "60", "1013"),
+    CityWeather mockWeather1 = new CityWeather(
+            new CityWeatherMain("15", "10", "20", "1013", "60", "1013"),
             "10000",
-            new WeatherSys("1704441600", "1704484800")
+            new CityWeatherSys("1704441600", "1704484800")
     );
 
     Location locationBengaluru = new Location("12.9767936", "77.590082");
@@ -169,7 +169,7 @@ void getCitiesWeather_SomeCitiesFail_ReturnsPartialData() {
 
     when(restTemplate.getForObject(
             eq("https://api.openweathermap.org/data/2.5/weather?lat=12.9767936&lon=77.590082&units=metric&appid=" + weatherApiKey),
-            eq(Weather.class)
+            eq(CityWeather.class)
     )).thenReturn(mockWeather1);
 
     when(locationService.getLocationCooordinates("hyderabaddd"))

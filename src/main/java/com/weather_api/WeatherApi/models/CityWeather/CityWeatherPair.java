@@ -3,11 +3,11 @@ package com.weather_api.WeatherApi.models.CityWeather;
 public class CityWeatherPair {
 
     String city;
-    WeatherDTO weather;
+    CityWeatherDTO weather;
 
     public CityWeatherPair(){};
 
-    public CityWeatherPair(String city, WeatherDTO weather) {
+    public CityWeatherPair(String city, CityWeatherDTO weather) {
         this.city = city;
         this.weather = weather;
     }
@@ -20,11 +20,11 @@ public class CityWeatherPair {
         this.city = city;
     }
 
-    public WeatherDTO getWeather() {
+    public CityWeatherDTO getWeather() {
         return weather;
     }
 
-    public void setWeather(WeatherDTO weather) {
+    public void setWeather(CityWeatherDTO weather) {
         this.weather = weather;
     }
 }

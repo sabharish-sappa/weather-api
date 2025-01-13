@@ -3,6 +3,5 @@ package com.weather_api.WeatherApi.models.CityWeather;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Weather (WeatherMain main, String visibility, WeatherSys sys ){}
-
+public record CityWeatherMain(String temp, String temp_min, String temp_max, String pressure, String humidity, String sea_level){}
 
