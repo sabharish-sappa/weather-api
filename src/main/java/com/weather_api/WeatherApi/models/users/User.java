@@ -19,7 +19,7 @@ public class User implements Subscriber {
     String name;
     String mobileNumber;
     String email;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Alert> alerts = new ArrayList<>();
 
@@ -87,6 +87,7 @@ public class User implements Subscriber {
 
         if(alertType.equals(AlertType.STORM)){
             System.out.println("sent Storm Alert for the user "+ name);
+
             System.out.println("Alert Message - Severe Thunderstorm Warning! sent successfully to user "+name+ " number - "+mobileNumber);
         }
 

@@ -3,7 +3,6 @@ package com.weather_api.WeatherApi;
 import com.weather_api.WeatherApi.models.alerts.Alert;
 import com.weather_api.WeatherApi.models.alerts.AlertType;
 import com.weather_api.WeatherApi.models.alerts.Location;
-import com.weather_api.WeatherApi.models.alerts.Publisher;
 import com.weather_api.WeatherApi.models.cityWeather.CityWeatherDTO;
 import com.weather_api.WeatherApi.models.users.User;
 import com.weather_api.WeatherApi.services.userService.UserService;
@@ -64,7 +63,8 @@ public class AlertGenerator implements Publisher {
 
     @Scheduled(cron = "*/30 * * * * *") // Every 10 minutes
     @Async
-    void checkForAlerts(){
+    @Override
+    public void checkForAlerts(){
 
         System.out.println("check for alerts executed");
         for(var alert:alerts){

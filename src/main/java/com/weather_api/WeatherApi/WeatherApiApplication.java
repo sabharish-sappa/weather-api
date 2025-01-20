@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@EnableAsync
+@EnableAsync(proxyTargetClass = true)
 @EnableScheduling
 public class WeatherApiApplication {
 
@@ -38,24 +38,11 @@ public class WeatherApiApplication {
 		return new ObjectMapper();
 	}
 
-//	@PostConstruct
-//	public void loadDataIntoMemory(){
-//		userService.createUser(new User("Sabharish","3242343243","test1@gmail.com"));
-//		userService.createUser(new User("Siddhu","76874664","test2@gmail.com"));
-//		userService.createUser(new User("Vinay","42343243223","test3@gmail.com"));
-//		userService.createUser(new User("Harshith","535435435","test4@gmail.com"));
-//		userService.createUser(new User("Manish","534543543","test5@gmail.com"));
-//
-//		alertService.createAlert(new AlertRequest("storm","84.41","18.76",1L));
-//		alertService.createAlert(new AlertRequest("temp","84.41","18.76",1L));
-//		alertService.createAlert(new AlertRequest("storm","84.41","18.76",2L));
-//		alertService.createAlert(new AlertRequest("temp","84.41","18.76",3L));
-//		alertService.createAlert(new AlertRequest("storm","84.41","18.76",4L));
-//		alertService.createAlert(new AlertRequest("temp","84.41","18.76",5L));
-//	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherApiApplication.class, args);
+
 	}
 
 }
