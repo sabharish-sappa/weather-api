@@ -86,17 +86,20 @@ public class User implements Subscriber {
     public void triggerAlert(AlertType alertType) {
 
         if(alertType.equals(AlertType.STORM)){
+            System.out.println();
             System.out.println("sent Storm Alert for the user "+ name);
-
             System.out.println("Alert Message - Severe Thunderstorm Warning! sent successfully to user "+name+ " number - "+mobileNumber);
         }
 
         else if(alertType.equals(AlertType.TEMP)){
+            System.out.println();
+
             System.out.println("sent Temp Alert for the user "+name);
             System.out.println("Alert Message - Severe Temperature Warning! sent successfully to user "+name+ " number - "+mobileNumber);
         }
 
         else{
+            System.out.println();
             System.out.println("sent Alert for the user "+name);
             System.out.println("Alert Message sent successfully to user "+name+ " number - "+mobileNumber);
         }

@@ -100,4 +100,19 @@ public class CityWeatherDTO {
     public void setTemperature(String temperature) {
         this.temperature = temperature;
     }
+
+    @Override
+    public String toString() {
+        return "CityWeatherDTO{" +
+                "temperature='" + temperature + '\'' +
+                ", humidity='" + humidity + '\'' +
+                ", min_temp='" + min_temp + '\'' +
+                ", max_temp='" + max_temp + '\'' +
+                ", pressure='" + pressure + '\'' +
+                ", sea_level='" + sea_level + '\'' +
+                ", visibility='" + visibility + '\'' +
+                ", sunrise='" + sunrise + '\'' +
+                ", sunset='" + sunset + '\'' +
+                '}';
+    }
 }

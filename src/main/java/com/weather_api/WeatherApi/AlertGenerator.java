@@ -5,6 +5,7 @@ import com.weather_api.WeatherApi.models.alerts.AlertType;
 import com.weather_api.WeatherApi.models.alerts.Location;
 import com.weather_api.WeatherApi.models.cityWeather.CityWeatherDTO;
 import com.weather_api.WeatherApi.models.users.User;
+import com.weather_api.WeatherApi.services.alertService.AlertService;
 import com.weather_api.WeatherApi.services.userService.UserService;
 import com.weather_api.WeatherApi.services.weatherService.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class AlertGenerator implements Publisher {
     WeatherService weatherService;
 
     @Autowired
-    UserService userService;
+    AlertService alertService;
 
     List<Alert> alerts = new ArrayList<>();
 
@@ -51,33 +52,26 @@ public class AlertGenerator implements Publisher {
 
     }
 
-    @Override
-    public void notifySubscriber() {
 
-        for(var alert:alerts){
-        }
-    }
-
-
-//    needs to check for every 10 mins
 
     @Scheduled(cron = "*/30 * * * * *") // Every 10 minutes
     @Async
     @Override
     public void checkForAlerts(){
 
+
+        alerts = alertService.getAllAlerts();
+
+        System.out.println();
         System.out.println("check for alerts executed");
         for(var alert:alerts){
-//            get the weather
             Location location = new Location(alert.getLat(),alert.getLng());
             CityWeatherDTO locationWeather = weatherService.getParticularLocationWeather(location);
-
-//            check if any disturbance in the values so that to generate an alert
-
             Boolean isAlertNeedToBeTriggered = isTriggerRequired(locationWeather,alert.getAlertType());
 
             if(isAlertNeedToBeTriggered)
             {
+                System.out.println("Triggering "+alert.getAlertType()+" Alert for "+alert.getUser().getName());
                 User user = alert.getUser();
                 user.triggerAlert(alert.getAlertType());
             }
