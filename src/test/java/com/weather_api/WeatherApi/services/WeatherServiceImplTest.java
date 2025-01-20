@@ -1,7 +1,7 @@
 package com.weather_api.WeatherApi.services;
 
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
-import com.weather_api.WeatherApi.models.*;
+import com.weather_api.WeatherApi.models.alerts.Location;
 import com.weather_api.WeatherApi.models.citiesWeather.CitiesWeather;
 import com.weather_api.WeatherApi.models.cityWeather.*;
 import com.weather_api.WeatherApi.services.locationService.LocationService;

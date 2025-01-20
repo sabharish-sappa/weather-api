@@ -1,6 +1,6 @@
 package com.weather_api.WeatherApi.services.locationService;
 
-import com.weather_api.WeatherApi.models.Location;
+import com.weather_api.WeatherApi.models.alerts.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

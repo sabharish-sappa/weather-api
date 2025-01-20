@@ -1,7 +1,7 @@
 package com.weather_api.WeatherApi.services.weatherService;
 
 import com.weather_api.WeatherApi.exceptions.WeatherServiceException;
-import com.weather_api.WeatherApi.models.*;
+import com.weather_api.WeatherApi.models.alerts.Location;
 import com.weather_api.WeatherApi.models.citiesWeather.CitiesWeather;
 import com.weather_api.WeatherApi.models.citiesWeather.FailedCityPair;
 import com.weather_api.WeatherApi.models.cityWeather.CityWeatherPair;
@@ -112,5 +112,28 @@ public class WeatherServiceImpl implements WeatherService{
         catch (Exception e){
             throw new WeatherServiceException(e.getMessage(),e);
         }
+    }
+
+
+
+    @Override
+    public CityWeatherDTO getParticularLocationWeather(Location locationCordinates) {
+
+        try {
+            String locationBasedUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + locationCordinates.lat() + "&lon=" + locationCordinates.lng() + "&units=metric&appid=" + openweatherApiKey;
+
+            CityWeather weather = restTemplate.getForObject(locationBasedUrl, CityWeather.class);
+
+            return new CityWeatherDTO(weather);
+        }
+
+        catch (HttpClientErrorException httpClientErrorException){
+            throw new WeatherServiceException(httpClientErrorException.getMessage(),httpClientErrorException);
+        }
+
+        catch (Exception e){
+            throw new WeatherServiceException(e.getMessage());
+        }
+
     }
 }

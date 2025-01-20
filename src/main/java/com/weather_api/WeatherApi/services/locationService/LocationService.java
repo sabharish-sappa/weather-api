@@ -1,6 +1,6 @@
 package com.weather_api.WeatherApi.services.locationService;
 
-import com.weather_api.WeatherApi.models.Location;
+import com.weather_api.WeatherApi.models.alerts.Location;
 
 public interface LocationService {
 

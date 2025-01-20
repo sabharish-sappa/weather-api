@@ -1,6 +1,6 @@
 package com.weather_api.WeatherApi.services;
 
-import com.weather_api.WeatherApi.models.Location;
+import com.weather_api.WeatherApi.models.alerts.Location;
 import com.weather_api.WeatherApi.services.locationService.LocationServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
