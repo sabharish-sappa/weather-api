@@ -5,6 +5,8 @@ import com.weather_api.WeatherApi.models.alerts.Alert;
 import com.weather_api.WeatherApi.models.alerts.AlertRequest;
 import com.weather_api.WeatherApi.models.users.User;
 import com.weather_api.WeatherApi.services.alertService.AlertService;
+import com.weather_api.WeatherApi.services.messageService.MessageService;
+import com.weather_api.WeatherApi.services.messageService.MessageServiceImpl;
 import com.weather_api.WeatherApi.services.userService.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.PrePersist;
@@ -27,6 +29,9 @@ public class WeatherApiApplication {
 
 	@Autowired
 	private AlertService alertService;
+
+	@Autowired
+	private MessageService messageService;
 
 	@Bean
 	public RestTemplate getRestTemplate(){

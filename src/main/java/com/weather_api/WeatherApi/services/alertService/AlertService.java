@@ -4,6 +4,7 @@ import com.weather_api.WeatherApi.models.alerts.*;
 import com.weather_api.WeatherApi.models.users.User;
 import com.weather_api.WeatherApi.repositories.AlertRepo;
 import com.weather_api.WeatherApi.repositories.UserRepo;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,24 +62,28 @@ public class AlertService {
         return alertRepository.findById(id);
     }
 
-    public Alert updateAlert(AlertRequest alertRequest){
-        Optional<User> userOptional = userRepository.findById(alertRequest.getUserId());
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+    public Alert updateAlert(AlertRequest updateAlertRequest, Long alertId){
 
-            Alert alert = new Alert();
-            alert.setAlertType(AlertType.valueOf(alertRequest.getAlertType().toUpperCase()));
-            alert.setLat(alertRequest.getLat());
-            alert.setLng(alertRequest.getLng());
-            alert.setUser(user);
+        Alert toBeUpdated = alertRepository.findById(alertId).orElseThrow(()->new EntityNotFoundException("No Alert found to update with the entered id - "+alertId));
 
-            user.addAlert(alert);
-            System.out.println("Alert created successfully for user " + user.getName());
 
-            return alertRepository.save(alert);
-        } else {
-            throw new RuntimeException("User with ID " + alertRequest.getUserId() + " not found.");
+        if(updateAlertRequest.getAlertType()!=null)
+        {
+            toBeUpdated.setAlertType(AlertType.valueOf(updateAlertRequest.getAlertType()));
         }
+
+        if(updateAlertRequest.getLat()!=null)
+        {
+            toBeUpdated.setLat(updateAlertRequest.getLat());
+        }
+
+        if(updateAlertRequest.getLng()!=null)
+        {
+            toBeUpdated.setLng(updateAlertRequest.getLng());
+        }
+
+
+        return alertRepository.save(toBeUpdated);
     }
 
 

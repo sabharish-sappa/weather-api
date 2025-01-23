@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 
 @Component
@@ -25,6 +26,10 @@ public class AlertGenerator implements Publisher {
 
     @Autowired
     AlertService alertService;
+
+
+    @Autowired
+    SubscriberFactory subscriberFactory;
 
     List<Alert> alerts = new ArrayList<>();
 
@@ -59,7 +64,6 @@ public class AlertGenerator implements Publisher {
     @Override
     public void checkForAlerts(){
 
-
         alerts = alertService.getAllAlerts();
 
         System.out.println();
@@ -67,18 +71,20 @@ public class AlertGenerator implements Publisher {
         for(var alert:alerts){
             Location location = new Location(alert.getLat(),alert.getLng());
             CityWeatherDTO locationWeather = weatherService.getParticularLocationWeather(location);
-            Boolean isAlertNeedToBeTriggered = isTriggerRequired(locationWeather,alert.getAlertType());
+            Integer isAlertRequired = isTriggerRequired(locationWeather,alert.getAlertType());
 
-            if(isAlertNeedToBeTriggered)
+            if(isAlertRequired!=0)
             {
-                System.out.println("Triggering "+alert.getAlertType()+" Alert for "+alert.getUser().getName());
                 User user = alert.getUser();
-                user.triggerAlert(alert.getAlertType());
+                String alertMessageToBeSent = getAlertMessage(alert.getAlertType(),isAlertRequired);
+                Subscriber subscriber = subscriberFactory.createSubscriber(user);
+                subscriber.triggerAlertMessageOverSms(alertMessageToBeSent);
+
             }
         }
     }
 
-    Boolean isTriggerRequired(CityWeatherDTO locationWeather, AlertType alertType){
+    int isTriggerRequired(CityWeatherDTO locationWeather, AlertType alertType){
         if(alertType.equals(AlertType.STORM))
         {
             try {
@@ -87,12 +93,12 @@ public class AlertGenerator implements Publisher {
                 double visibilityValue = Double.parseDouble(locationWeather.getVisibility());
 
                 if (humidityValue > 85 && pressureValue < 1000 && visibilityValue < 2) {
-                    return true;
+                    return 1;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input for weather parameters.");
             }
-            return false;
+            return 0;
 
         }
         else if(alertType.equals(AlertType.TEMP)){
@@ -101,22 +107,39 @@ public class AlertGenerator implements Publisher {
                 double min = Double.parseDouble(locationWeather.getMin_temp());
                 double max = Double.parseDouble(locationWeather.getMax_temp());
 
-                if (temp > 30 || max > 40) {
-                    return true;
-                }
+                if (temp > 25 || max > 40)
+                    return 1;
 
-                if (temp < 0 || min < 0) {
-                    return true;
-                }
+                if (temp < 0 || min < 0)
+                    return -1;
 
 
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input for temperature parameters.");
             }
 
-            return false;
+            return 0;
         }
 
-       return false;
+       return 0;
+    }
+
+    String getAlertMessage(AlertType alertType, int condition)
+    {
+
+        String result="";
+        if(condition<0)
+        {
+            return "Lower "+alertType.toString()+" values are predicted in your area";
+        }
+
+        else if(condition>0)
+        {
+            return "Higher "+alertType.toString()+" values are predicted recorded in your area";
+        }
+        else {
+            return ""+alertType.toString()+" alert is predicted in your area.";
+        }
+
     }
 }

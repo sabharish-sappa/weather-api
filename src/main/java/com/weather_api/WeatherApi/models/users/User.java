@@ -5,14 +5,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.weather_api.WeatherApi.models.alerts.Alert;
 import com.weather_api.WeatherApi.models.alerts.AlertType;
 import com.weather_api.WeatherApi.models.alerts.Location;
+import com.weather_api.WeatherApi.services.messageService.MessageService;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements Subscriber {
+public class User{
+
     @Id
     @GeneratedValue()
     Long id;
@@ -82,29 +85,6 @@ public class User implements Subscriber {
         this.alerts = alerts;
     }
 
-    @Override
-    public void triggerAlert(AlertType alertType) {
-
-        if(alertType.equals(AlertType.STORM)){
-            System.out.println();
-            System.out.println("sent Storm Alert for the user "+ name);
-            System.out.println("Alert Message - Severe Thunderstorm Warning! sent successfully to user "+name+ " number - "+mobileNumber);
-        }
-
-        else if(alertType.equals(AlertType.TEMP)){
-            System.out.println();
-
-            System.out.println("sent Temp Alert for the user "+name);
-            System.out.println("Alert Message - Severe Temperature Warning! sent successfully to user "+name+ " number - "+mobileNumber);
-        }
-
-        else{
-            System.out.println();
-            System.out.println("sent Alert for the user "+name);
-            System.out.println("Alert Message sent successfully to user "+name+ " number - "+mobileNumber);
-        }
-
-    }
 
     @Override
     public String toString() {

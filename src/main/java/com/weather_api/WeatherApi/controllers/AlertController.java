@@ -2,10 +2,8 @@ package com.weather_api.WeatherApi.controllers;
 
 import com.weather_api.WeatherApi.models.alerts.Alert;
 import com.weather_api.WeatherApi.models.alerts.AlertRequest;
-import com.weather_api.WeatherApi.models.users.User;
 import com.weather_api.WeatherApi.services.alertService.AlertService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,17 +32,12 @@ public class AlertController {
         return alertService.createAlert(alertRequest);
     }
 
+    @PatchMapping("/update/{id}")
 
-//    some issue is there, fix it
-    @PutMapping("/update")
-    public Alert updateAlert(@RequestBody AlertRequest updateAlertRequest)  {
+    public Alert updateAlert(@PathVariable(name = "id") long alertId, @RequestBody AlertRequest updateAlertRequest)  {
 
-        Optional<Alert>alert  = alertService.getAlertById(updateAlertRequest.getId());
+        return alertService.updateAlert(updateAlertRequest,alertId);
 
-        if(alert.isPresent())
-        return alertService.updateAlert(updateAlertRequest);
-
-        return null;
     }
 
     @DeleteMapping("/delete/{id}")

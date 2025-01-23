@@ -25,6 +25,9 @@ public class DataLoadingComponent {
 
 
     public void loadDataIntoMemory(){
+
+        System.out.println();
+        System.out.println("Inserting Dummy Data in to H2 DB");
         userService.createUser(new User("Sabharish","8721234498","test1@gmail.com"));
         userService.createUser(new User("Siddhu","9876543234","test2@gmail.com"));
         userService.createUser(new User("Vinay","7738217362","test3@gmail.com"));
@@ -37,5 +40,8 @@ public class DataLoadingComponent {
         alertService.createAlert(new AlertRequest("temp","12.98","77.62",3L));
         alertService.createAlert(new AlertRequest("storm","84.41","18.76",4L));
         alertService.createAlert(new AlertRequest("temp","12.98","77.62",5L));
+        System.out.println("completed Inserting Dummy Data in to H2 DB");
+        System.out.println();
+
     }
 }

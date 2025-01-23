@@ -2,6 +2,7 @@ package com.weather_api.WeatherApi.services.userService;
 
 import com.weather_api.WeatherApi.models.users.User;
 import com.weather_api.WeatherApi.repositories.UserRepo;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,20 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    public User updateUser(User user){
-        return userRepo.save(user);
+    public User updateUser(Long id,User updatedUser){
+
+        User userToBeUpdated = userRepo.findById(id).orElseThrow(()->new EntityNotFoundException("No user found with the entered id - "+id+" Try again with different id"));
+
+        if(updatedUser.getName()!=null)
+            userToBeUpdated.setName(updatedUser.getName());
+
+        if(updatedUser.getEmail()!=null)
+            userToBeUpdated.setEmail(updatedUser.getEmail());
+
+        if(updatedUser.getMobileNumber()!=null)
+            userToBeUpdated.setMobileNumber(updatedUser.getMobileNumber());
+
+        return userRepo.save(updatedUser);
     }
 
 

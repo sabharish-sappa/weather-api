@@ -9,7 +9,6 @@ import jakarta.persistence.ManyToOne;
 
 public class AlertRequest {
 
-    Long id;
     String lat;
     String lng;
     String alertType;
@@ -54,14 +53,6 @@ public class AlertRequest {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override

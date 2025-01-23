@@ -42,19 +42,10 @@ public class UserController {
         return userService.createUser(theUser);
     }
 
-    @PutMapping("/update")
-    public User updateUser(@RequestBody User updatedUser)  {
+    @PatchMapping("/update/{id}")
+    public User updateUser(@PathVariable("id")Long id, @RequestBody User updatedUser)  {
 
-        Optional<User> user = userService.getUserById(updatedUser.getId());
-
-        if(user.isPresent())
-        {
-            return userService.updateUser(updatedUser);
-        }
-                return null;
-//        if(userService.getUserById(updatedUser.getId()).==nul)
-//            return null;
-//            handle above exception properly
+            return userService.updateUser(id, updatedUser);
     }
 
     @DeleteMapping("/delete/{id}")
