@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.weather1-api</groupId>
-	<artifactId>WeatherApi</artifactId>
+	<artifactId>critical-alert-weather-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>WeatherApi</name>
 	<description>Demo project for Spring Boot</description>
